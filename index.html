@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lab 8.3 - Native APIs Demo</title>
+
+  <!-- CSP: อนุญาตเฉพาะไฟล์สคริปต์จากตัวเอง, ไม่มี inline JS -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    font-src 'self';
+    connect-src 'self';
+    media-src 'self';
+    object-src 'none';
+    base-uri 'self';
+  ">
+
+  <!-- โหลดสคริปต์แบบ defer (ไม่ใช้อินไลน์) -->
+  <script defer src="./renderer.js"></script>
+
+  <style>
+    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;margin:0;padding:20px;background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:white}
+    .container{max-width:900px;margin:0 auto;background:rgba(255,255,255,.1);padding:30px;border-radius:15px;backdrop-filter:blur(10px)}
+    .header{text-align:center;margin-bottom:30px}
+    .section{background:rgba(255,255,255,.1);padding:20px;border-radius:10px;margin-bottom:20px}
+    .button{background:rgba(255,255,255,.2);border:2px solid #fff;color:#fff;padding:12px 24px;border-radius:25px;cursor:pointer;font-size:16px;margin:10px 5px;transition:.3s}
+    .button:hover{background:#fff;color:#4CAF50;transform:translateY(-2px)}
+    .result-box{background:rgba(0,0,0,.2);padding:15px;border-radius:8px;margin-top:15px;font-family:monospace;white-space:pre-wrap;max-height:220px;overflow-y:auto}
+    .file-content{background:rgba(255,255,255,.9);color:#333;padding:15px;border-radius:8px;margin-top:15px;max-height:300px;overflow-y:auto;font-family:monospace}
+    textarea{width:100%;height:150px;padding:10px;border:none;border-radius:5px;font-family:monospace;font-size:14px;resize:vertical;box-sizing:border-box}
+    .loading{color:#FFD700}.success{color:#90EE90}.error{color:#FF6B6B}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🖥️ Native APIs Demo</h1>
+      <p>การใช้ Native APIs ของ Operating System</p>
+    </div>
+
+    <!-- File Operations -->
+    <div class="section">
+      <h3>📁 File Operations</h3>
+      <p>เปิดและบันทึกไฟล์ด้วย OS dialogs</p>
+
+      <button class="button" id="btnOpenFile">📂 เปิดไฟล์</button>
+      <button class="button" id="btnExportAgents">📊 Export Agent Data</button>
+      <button class="button" id="btnSaveText">💾 บันทึกเนื้อหา</button>
+
+      <div class="result-box" id="fileResult">กดปุ่มเพื่อทดสอบ file operations</div>
+      <div id="fileContent" class="file-content" style="display:none;"></div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="section">
+      <h3>🔔 Desktop Notifications</h3>
+      <p>แจ้งเตือนแบบ Operating System</p>
+
+      <button class="button" id="btnNotifBasic">🔔 ทดสอบ Notification</button>
+      <button class="button" id="btnNotifLogin">🟢 Agent Login</button>
+      <button class="button" id="btnNotifCall">📞 Call Received</button>
+      <button class="button" id="btnNotifUrgent">🚨 Urgent Alert</button>
+
+      <div class="result-box" id="notificationResult">กดปุ่มเพื่อทดสอบ notifications</div>
+    </div>
+
+    <!-- Text Editor -->
+    <div class="section">
+      <h3>📝 Text Editor</h3>
+      <p>เขียนข้อความและบันทึกเป็นไฟล์</p>
+      <textarea id="textEditor" placeholder="เขียนข้อความที่นี่... จะสามารถบันทึกเป็นไฟล์ได้"></textarea>
+    </div>
+
+    <!-- System Tray -->
+    <div class="section">
+      <h3>🖱️ System Tray Integration</h3>
+      <p>ควบคุม app ผ่าน system tray (ถาดระบบ)</p>
+
+      <button class="button" id="btnHideToTray">👁️ ซ่อนไป Tray</button>
+      <button class="button" id="btnTrayInfo">🔔 แจ้งเตือนจาก Tray</button>
+
+      <div class="result-box" id="trayResult">
+ℹ️ System Tray Features:
+• คลิกขวาที่ icon ใน taskbar เพื่อเปิดเมนู
+• เปลี่ยนสถานะ agent ได้จาก tray menu
+• ซ่อน/แสดง app ได้จาก tray
+• ปิดโปรแกรมได้จาก tray menu
+
+💡 ลองปิด window นี้ - แอปจะซ่อนไปใน system tray!
+      </div>
+    </div>
+  </div>
+</body>
+</html>
